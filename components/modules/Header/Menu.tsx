@@ -12,7 +12,6 @@ import { useState } from "react";
 import Accordion from "../Accordion/Accordion";
 import { usePathname } from "next/navigation";
 import MenuLinkItem from "./MenuLinkItem";
-import Link from "next/link";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import BuyersListItem from "./BuyersListItem";
 import ContactsListItem from "./ContactsListItem";

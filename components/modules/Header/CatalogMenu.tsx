@@ -10,6 +10,9 @@ import { removeOverflowHiddenFromBody } from "@/lib/utils/common";
 import { useUnit } from "effector-react";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import CatalogMenuButton from "./CatalogMenuButton";
+import CatalogMenuList from "./CatalogMenuList";
+import Accordion from "../Accordion/Accordion";
+import Link from "next/link";
 
 const CatalogMenu = () => {
   const catalogMenuIsOpen = useUnit($catalogMenuIsOpen);
@@ -23,7 +26,7 @@ const CatalogMenu = () => {
     catalogMenuIsOpen
   );
 
-  const isMedia640 = useMediaQuery(640);
+  const isMedia450 = useMediaQuery(450);
 
   const handleShowClothList = () => {
     setShowClothList(true);
@@ -111,7 +114,7 @@ const CatalogMenu = () => {
           <motion.aside
             initial={{ width: 0 }}
             animate={{
-              width: "calc(100% - 0px)",
+              width: "100%",
             }}
             exit={{
               width: 0,
@@ -126,11 +129,6 @@ const CatalogMenu = () => {
               exit="closed"
               variants={sideVariants}
             >
-              <img
-                className="catalog-menu__bg"
-                src="/img/menu-bg-small.png"
-                alt="menu background"
-              />
               <motion.button
                 className="btn-reset catalog-menu__close"
                 variants={itemVariants}
@@ -149,13 +147,19 @@ const CatalogMenu = () => {
                     name,
                     isActive,
                   });
+
+                  const isCurrentList = (
+                    showList: boolean,
+                    currentId: number
+                  ) => showList && id === currentId;
+
                   return (
                     <motion.li
                       key={id}
                       variants={itemVariants}
                       className="catalog-menu__list__item"
                     >
-                      {!isMedia640 && (
+                      {!isMedia450 && (
                         <>
                           {id === 1 && (
                             <CatalogMenuButton
@@ -178,6 +182,44 @@ const CatalogMenu = () => {
                             />
                           )}
                         </>
+                      )}
+                      {!isMedia450 && (
+                        <AnimatePresence>
+                          {isCurrentList(showClothList, 1) && (
+                            <CatalogMenuList items={items} />
+                          )}
+                          {isCurrentList(showAccessoriesList, 2) && (
+                            <CatalogMenuList items={items} />
+                          )}
+                          {isCurrentList(showSouvenirsList, 3) && (
+                            <CatalogMenuList items={items} />
+                          )}
+                          {isCurrentList(showOfficeList, 4) && (
+                            <CatalogMenuList items={items} />
+                          )}
+                        </AnimatePresence>
+                      )}
+                      {isMedia450 && (
+                        <Accordion
+                          title={name}
+                          titleClass="btn-reset nav-menu__accordion__item__title"
+                        >
+                          <ul className="list-reset catalog__accordion__list">
+                            {items.map((title, i) => (
+                              <li
+                                key={i}
+                                className="catalog__accordion__list__item"
+                              >
+                                <Link
+                                  href="/catalog"
+                                  className="nav-menu__accordion__item__list__item__link"
+                                >
+                                  {title}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </Accordion>
                       )}
                     </motion.li>
                   );
