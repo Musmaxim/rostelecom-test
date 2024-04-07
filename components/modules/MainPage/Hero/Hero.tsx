@@ -3,6 +3,7 @@
 import ProductSubtitle from "@/components/elements/ProductSubtitle/ProductSubtitle";
 import useLang from "@/hooks/useLang";
 import styles from "@/styles/main-page/index.module.scss";
+import stylesForAd from "@/styles/ad/index.module.scss";
 import img1 from "@/public/img/black-t.png";
 import img2 from "@/public/img/orange-t.png";
 import img3 from "@/public/img/violet-t.png";
@@ -12,6 +13,7 @@ import { Swiper as SwiperType } from "swiper/types";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import HeroSlide from "./HeroSlide";
+
 const Hero = () => {
   const { lang, translations } = useLang();
 
@@ -41,7 +43,7 @@ const Hero = () => {
         {translations[lang].main_page.hero_hidden_title}
       </h1>
       <div className={`container ${styles.hero__container}`}>
-        <span className={styles.ad}>{translations[lang].common.ad}</span>
+        <span className={stylesForAd.ad}>{translations[lang].common.ad}</span>
         <Swiper
           className={styles.hero__slider}
           effect="coverflow"
