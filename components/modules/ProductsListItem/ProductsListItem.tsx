@@ -5,16 +5,24 @@ import stylesForAd from "@/styles/ad/index.module.scss";
 import Link from "next/link";
 import ProductSubtitle from "@/components/elements/ProductSubtitle/ProductSubtitle";
 import Image from "next/image";
-import { formatPrice } from "@/lib/utils/common";
+import { addOverflowHiddenToBody, formatPrice } from "@/lib/utils/common";
 import ProductLabel from "./ProductLabel";
 import ProductItemActionBtn from "@/components/elements/ProductItemActionBtn/ProductItemActionBtn";
 import ProductAvailable from "@/components/elements/ProductAvaliable/ProductAvailable";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { showQuickViewModal } from "@/context/modals";
+import { setCurrentProduct } from "@/context/goods";
 
 const ProductsListItem = ({ item, title }: IProductsListItemProps) => {
   const { lang, translations } = useLang();
   const isTitleForNew = title === translations[lang].main_page.new_title;
   const isMedia800 = useMediaQuery(800);
+
+  const handleShowQuickViewModal = () => {
+    addOverflowHiddenToBody();
+    showQuickViewModal();
+    setCurrentProduct(item);
+  };
   return (
     <>
       {item.characteristics.collection === "line" &&
@@ -81,12 +89,13 @@ const ProductsListItem = ({ item, title }: IProductsListItemProps) => {
               text={translations[lang].product.add_to_comparison}
               iconClass="actions__btn_comparison"
             />
-            {!isMedia800 && 
+            {!isMedia800 && (
               <ProductItemActionBtn
                 text={translations[lang].product.quick_view}
                 iconClass="actions__btn_quick_view"
+                callback={handleShowQuickViewModal}
               />
-            }
+            )}
           </div>
           <Link
             href={`/catalog/${item.category}/${item._id}`}

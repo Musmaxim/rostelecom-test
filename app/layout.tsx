@@ -10,7 +10,7 @@ import "./globalStyles/cart-popup.css";
 import "./globalStyles/footer.css";
 import "./globalStyles/slick.css";
 import "./globalStyles/slick-theme.css";
-import Layout from "@/components/layouts/Layout";
+import PageLayout from "@/components/layouts/PageLayout";
 
 export const metadata: Metadata = {
   title: "Rostelecom-test",
@@ -22,11 +22,5 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <body>
-        <Layout>{children}</Layout>
-      </body>
-    </html>
-  );
+  return <PageLayout>{children}</PageLayout>;
 }
