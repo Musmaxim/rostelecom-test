@@ -11,6 +11,10 @@ import useLang from "@/hooks/useLang";
 import ProductSizeTableBtn from "../ProductsListItem/ProductSizeTableBtn";
 import ProductSizesItem from "../ProductsListItem/ProductSizesItem";
 import ProductCounter from "../ProductsListItem/ProductCounter";
+import AddToCartBtn from "../ProductsListItem/AddToCartBtn";
+import Link from "next/link";
+import stylesForProduct from "@/styles/product-list-item/index.module.scss";
+import ProductItemActionBtn from "@/components/elements/ProductItemActionBtn/ProductItemActionBtn";
 
 const QuickViewModal = () => {
   const { lang, translations } = useLang();
@@ -26,6 +30,18 @@ const QuickViewModal = () => {
         className={`btn-reset ${styles.modal__close}`}
         onClick={handleCloseModal}
       />
+      <div className={styles.modal__actions}>
+        <ProductItemActionBtn
+          text={translations[lang].product.add_to_favorites}
+          iconClass="actions__btn_favorite"
+          withTooltip={false}
+        />
+        <ProductItemActionBtn
+          text={translations[lang].product.add_to_comparison}
+          iconClass="actions__btn_comparison"
+          withTooltip={false}
+        />
+      </div>
       <div className={styles.modal__left}>
         <QuickViewModalSlider images={images} />
       </div>
@@ -48,7 +64,7 @@ const QuickViewModal = () => {
           {Object.keys(product.sizes).length ? (
             <div className={styles.modal__right__info__size}>
               <div className={styles.modal__right__info__size__inner}>
-                <span className={styles.product__size_title}>
+                <span className={stylesForProduct.product__size_title}>
                   {translations[lang].catalog.size}
                 </span>
                 <ProductSizeTableBtn
@@ -73,7 +89,7 @@ const QuickViewModal = () => {
             ""
           )}
           <div className={styles.modal__right__bottom}>
-            <span className={styles.product__count_title}>
+            <span className={stylesForProduct.product__count_title}>
               {translations[lang].product.count}
             </span>
             <div className={styles.modal__right__bottom__inner}>
@@ -90,8 +106,21 @@ const QuickViewModal = () => {
                   <span>{translations[lang].product.total_in_cart} 0</span>
                 </div>
               )}
+              <AddToCartBtn
+                className={styles.modal__right__bottom__add}
+                text={translations[lang].product.to_cart}
+              />
             </div>
           </div>
+        </div>
+        <div className={styles.modal__right__more}>
+          <Link
+            href={`/catalog/${product.category}/${product._id}`}
+            className={styles.modal__right__more__link}
+            onClick={handleCloseModal}
+          >
+            {translations[lang].product.more}
+          </Link>
         </div>
       </div>
     </div>

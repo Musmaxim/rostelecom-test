@@ -14,3 +14,8 @@ export interface IProductCounterProps {
   className: string;
   count: number;
 }
+
+export interface IAddToCartBtnProps {
+  text: string;
+  className?: string;
+}

@@ -5,14 +5,14 @@ import useLang from "@/hooks/useLang";
 import Link from "next/link";
 import Menu from "./Menu";
 import {
-  addOverflowHiddenToBody
+  addOverflowHiddenToBody,
+  handleOpenAuthPopup,
 } from "@/lib/utils/common";
 import { openMenu, openSearchModal } from "@/context/modals";
 import CartPopup from "./CartPopup";
 
 const Header = () => {
   const { lang, translations } = useLang();
-
 
   const handleOpenMenu = () => {
     addOverflowHiddenToBody();
@@ -54,12 +54,12 @@ const Header = () => {
             />
           </li>
           <li className="header__links__item">
-            <CartPopup/>
+            <CartPopup />
           </li>
           <li className="header__links__item header__links__item--profile">
-            <Link
-              href="/profile"
-              className="header__links__item__btn header__links__item__btn--profile"
+            <button
+              className="btn-reset header__links__item__btn header__links__item__btn--profile"
+              onClick={handleOpenAuthPopup}
             />
           </li>
         </ul>
